@@ -55,8 +55,9 @@ extension CollectionViewCell {
     func loadTheData() {
         factImageView.image = UIImage(named: "defaultimage")
         titleLabel.text = "Fact Title"
-        descriptionLabel.text = "Beavers are second only to humans in their ability to manipulate and change their environment. They can measure up to 1.3 metres long. A group of beavers is called a colony"
+        descriptionLabel.text = "Beavers are second only to humans"
     }
+    
     //Function to set the layout constraints for the subviews
     func setUpConstraintsForControls() {
         let marginGuide = contentView.layoutMarginsGuide
@@ -75,4 +76,3 @@ extension CollectionViewCell {
         descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 5).isActive = true
     }
 }
-

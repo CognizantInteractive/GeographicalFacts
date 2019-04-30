@@ -14,6 +14,13 @@
 		26522A23227815F0005207AB /* GeographicalFactsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26522A22227815F0005207AB /* GeographicalFactsTests.swift */; };
 		26522A2E22781836005207AB /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26522A2D22781836005207AB /* ViewModel.swift */; };
 		26522A302278191F005207AB /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26522A2F2278191F005207AB /* CollectionViewCell.swift */; };
+		26F8FECC2278457B00BBFB49 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 26F8FECB2278457B00BBFB49 /* Podfile */; };
+		26F8FF32227860CA00BBFB49 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F8FF31227860CA00BBFB49 /* NetworkManager.swift */; };
+		26F8FF342278614000BBFB49 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F8FF332278614000BBFB49 /* Reachability.swift */; };
+		26F8FF362278619300BBFB49 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F8FF352278619300BBFB49 /* Constants.swift */; };
+		26F8FF392278623000BBFB49 /* FactData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F8FF382278623000BBFB49 /* FactData.swift */; };
+		4EE442462437CE227D8760D5 /* Pods_GeographicalFacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F6D3381CB04585F11A0E60 /* Pods_GeographicalFacts.framework */; };
+		8DB69B206FDE5CD7D5A7923B /* Pods_GeographicalFactsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CEFDE1970154A4456E90302 /* Pods_GeographicalFactsTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,6 +34,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		00C4F6D0A4BE87B19C82A6B5 /* Pods-GeographicalFacts.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GeographicalFacts.release.xcconfig"; path = "Target Support Files/Pods-GeographicalFacts/Pods-GeographicalFacts.release.xcconfig"; sourceTree = "<group>"; };
 		26522A0A227815EF005207AB /* GeographicalFacts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GeographicalFacts.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		26522A0D227815EF005207AB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		26522A0F227815EF005207AB /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -38,6 +46,16 @@
 		26522A24227815F0005207AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		26522A2D22781836005207AB /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		26522A2F2278191F005207AB /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
+		26F8FECB2278457B00BBFB49 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		26F8FF31227860CA00BBFB49 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		26F8FF332278614000BBFB49 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
+		26F8FF352278619300BBFB49 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		26F8FF382278623000BBFB49 /* FactData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactData.swift; sourceTree = "<group>"; };
+		3CEFDE1970154A4456E90302 /* Pods_GeographicalFactsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GeographicalFactsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		715409AB60641A86C6C834A1 /* Pods-GeographicalFacts.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GeographicalFacts.debug.xcconfig"; path = "Target Support Files/Pods-GeographicalFacts/Pods-GeographicalFacts.debug.xcconfig"; sourceTree = "<group>"; };
+		9C5D5097F058AB5C7E685753 /* Pods-GeographicalFactsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GeographicalFactsTests.debug.xcconfig"; path = "Target Support Files/Pods-GeographicalFactsTests/Pods-GeographicalFactsTests.debug.xcconfig"; sourceTree = "<group>"; };
+		B3F6D3381CB04585F11A0E60 /* Pods_GeographicalFacts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GeographicalFacts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED6610482161FD56B783D7E7 /* Pods-GeographicalFactsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GeographicalFactsTests.release.xcconfig"; path = "Target Support Files/Pods-GeographicalFactsTests/Pods-GeographicalFactsTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4EE442462437CE227D8760D5 /* Pods_GeographicalFacts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -52,6 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8DB69B206FDE5CD7D5A7923B /* Pods_GeographicalFactsTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,9 +81,12 @@
 		26522A01227815EF005207AB = {
 			isa = PBXGroup;
 			children = (
+				26F8FECB2278457B00BBFB49 /* Podfile */,
 				26522A0C227815EF005207AB /* GeographicalFacts */,
 				26522A21227815F0005207AB /* GeographicalFactsTests */,
 				26522A0B227815EF005207AB /* Products */,
+				3A22FDCCF380BC2634E67761 /* Pods */,
+				D9F8C30BAB97BF70526089FD /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -79,6 +102,9 @@
 		26522A0C227815EF005207AB /* GeographicalFacts */ = {
 			isa = PBXGroup;
 			children = (
+				26F8FF372278621700BBFB49 /* Model */,
+				26F8FF30227860A100BBFB49 /* Utilities */,
+				26F8FF2F2278609700BBFB49 /* Network */,
 				26522A3222782176005207AB /* ViewModel */,
 				26522A312278215E005207AB /* View */,
 				26522A0D227815EF005207AB /* AppDelegate.swift */,
@@ -115,6 +141,51 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		26F8FF2F2278609700BBFB49 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				26F8FF31227860CA00BBFB49 /* NetworkManager.swift */,
+				26F8FF332278614000BBFB49 /* Reachability.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		26F8FF30227860A100BBFB49 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				26F8FF352278619300BBFB49 /* Constants.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		26F8FF372278621700BBFB49 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				26F8FF382278623000BBFB49 /* FactData.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		3A22FDCCF380BC2634E67761 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				715409AB60641A86C6C834A1 /* Pods-GeographicalFacts.debug.xcconfig */,
+				00C4F6D0A4BE87B19C82A6B5 /* Pods-GeographicalFacts.release.xcconfig */,
+				9C5D5097F058AB5C7E685753 /* Pods-GeographicalFactsTests.debug.xcconfig */,
+				ED6610482161FD56B783D7E7 /* Pods-GeographicalFactsTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		D9F8C30BAB97BF70526089FD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B3F6D3381CB04585F11A0E60 /* Pods_GeographicalFacts.framework */,
+				3CEFDE1970154A4456E90302 /* Pods_GeographicalFactsTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -122,9 +193,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 26522A27227815F0005207AB /* Build configuration list for PBXNativeTarget "GeographicalFacts" */;
 			buildPhases = (
+				F68D995935C10E9AD9C8FC09 /* [CP] Check Pods Manifest.lock */,
 				26522A06227815EF005207AB /* Sources */,
 				26522A07227815EF005207AB /* Frameworks */,
 				26522A08227815EF005207AB /* Resources */,
+				26F8FF2E22785F4000BBFB49 /* ShellScript */,
+				823117E26CE937F737B58D52 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -139,6 +213,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 26522A2A227815F0005207AB /* Build configuration list for PBXNativeTarget "GeographicalFactsTests" */;
 			buildPhases = (
+				2668EF5E4D0AE74D2E3F724A /* [CP] Check Pods Manifest.lock */,
 				26522A1A227815F0005207AB /* Sources */,
 				26522A1B227815F0005207AB /* Frameworks */,
 				26522A1C227815F0005207AB /* Resources */,
@@ -196,6 +271,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26F8FECC2278457B00BBFB49 /* Podfile in Resources */,
 				26522A18227815F0005207AB /* LaunchScreen.storyboard in Resources */,
 				26522A15227815F0005207AB /* Assets.xcassets in Resources */,
 			);
@@ -210,13 +286,103 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		2668EF5E4D0AE74D2E3F724A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-GeographicalFactsTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		26F8FF2E22785F4000BBFB49 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+		};
+		823117E26CE937F737B58D52 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GeographicalFacts/Pods-GeographicalFacts-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GeographicalFacts/Pods-GeographicalFacts-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F68D995935C10E9AD9C8FC09 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-GeographicalFacts-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		26522A06227815EF005207AB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				26522A2E22781836005207AB /* ViewModel.swift in Sources */,
+				26F8FF392278623000BBFB49 /* FactData.swift in Sources */,
 				26522A10227815EF005207AB /* MainViewController.swift in Sources */,
+				26F8FF342278614000BBFB49 /* Reachability.swift in Sources */,
+				26F8FF32227860CA00BBFB49 /* NetworkManager.swift in Sources */,
+				26F8FF362278619300BBFB49 /* Constants.swift in Sources */,
 				26522A302278191F005207AB /* CollectionViewCell.swift in Sources */,
 				26522A0E227815EF005207AB /* AppDelegate.swift in Sources */,
 			);
@@ -370,6 +536,7 @@
 		};
 		26522A28227815F0005207AB /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 715409AB60641A86C6C834A1 /* Pods-GeographicalFacts.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -388,6 +555,7 @@
 		};
 		26522A29227815F0005207AB /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 00C4F6D0A4BE87B19C82A6B5 /* Pods-GeographicalFacts.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -406,6 +574,7 @@
 		};
 		26522A2B227815F0005207AB /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9C5D5097F058AB5C7E685753 /* Pods-GeographicalFactsTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -426,6 +595,7 @@
 		};
 		26522A2C227815F0005207AB /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ED6610482161FD56B783D7E7 /* Pods-GeographicalFactsTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";

@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 class ViewModel: NSObject {
-    
+    var factData = FactData()
 }
 
 // MARK: - UICollectionViewDataSource
