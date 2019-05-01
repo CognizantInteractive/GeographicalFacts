@@ -63,13 +63,14 @@ extension ViewModel: UICollectionViewDataSource {
         return 1
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView,
+                        numberOfItemsInSection section: Int) -> Int {
         return factData.rows?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let factCell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell",
+        if let factCell = collectionView.dequeueReusableCell(withReuseIdentifier: CellIdentifiers.CollectionViewCellId,
                                                              for: indexPath) as? CollectionViewCell {
             if let factData =  self.factData.rows {
                 let factModelData = factData[indexPath.row]
@@ -81,7 +82,8 @@ extension ViewModel: UICollectionViewDataSource {
         return UICollectionViewCell()
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         return collectionView.frame.size
     }

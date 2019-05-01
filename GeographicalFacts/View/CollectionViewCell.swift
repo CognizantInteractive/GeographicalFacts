@@ -27,21 +27,37 @@ class CollectionViewCell: UICollectionViewCell {
         imageView.backgroundColor = .clear
         return imageView
     }()
+    lazy var contentViewWidth: NSLayoutConstraint = {
+        let viewWidth = contentView.widthAnchor.constraint(equalToConstant: bounds.size.width)
+        viewWidth.isActive = true
+        return viewWidth
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.backgroundColor = .white
         contentView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([contentView.leftAnchor.constraint(equalTo: leftAnchor),
-                                     contentView.rightAnchor.constraint(equalTo: rightAnchor),
-                                     contentView.topAnchor.constraint(equalTo: topAnchor),
-                                     contentView.bottomAnchor.constraint(equalTo: bottomAnchor)])
         addSubViews()
         setUpConstraintsForControls()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority
+        horizontalFittingPriority: UILayoutPriority,
+                                          verticalFittingPriority: UILayoutPriority) -> CGSize {
+        contentViewWidth.constant = bounds.size.width
+        return contentView.systemLayoutSizeFitting(CGSize(width: targetSize.width, height: 30))
+    }
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        clearsContextBeforeDrawing = true
+        contentView.clearsContextBeforeDrawing = true
+        titleLabel.text = nil
+        descriptionLabel.text = nil
+        factImageView.image = nil
     }
 }
 
@@ -79,5 +95,10 @@ extension CollectionViewCell {
         descriptionLabel.bottomAnchor.constraint(equalTo: marginGuide.bottomAnchor).isActive = true
         descriptionLabel.trailingAnchor.constraint(equalTo: marginGuide.trailingAnchor).isActive = true
         descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 5).isActive = true
+    }
+    
+    func setPreferred(width: CGFloat) {
+        titleLabel.preferredMaxLayoutWidth = width
+        descriptionLabel.preferredMaxLayoutWidth = width
     }
 }

@@ -15,6 +15,9 @@ struct TestDataFetchUrl {
     static let badJSONUrl = "https://dl.dropboxusercontent.com/2iodh4vg0eortkl/facts.json"
     static let factsFetchInvalidUrl = ""
 }
+struct CellIdentifiers {
+    static let CollectionViewCellId = "CollectionViewCell"
+}
 struct ErrorMessages {
     static let networkErrorMessgae           = "Network is not present, please try again later."
     static let commonErrorMessage            = "Some error occured, please try again later."

@@ -15,7 +15,7 @@ class MainViewController: UIViewController {
         let flowLayout = UICollectionViewFlowLayout()
         let width = UIScreen.main.bounds.size.width
         //estimated size
-        flowLayout.estimatedItemSize = CGSize(width: width,
+        flowLayout.estimatedItemSize = CGSize(width: self.preferredWith(forSize: self.view.bounds.size),
                                               height: CGFloat(Float(30)))
         return flowLayout
     }()
@@ -56,7 +56,7 @@ extension MainViewController {
     func configureCollectionView() {
         self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         self.collectionView.register(CollectionViewCell.self,
-                                     forCellWithReuseIdentifier: "CollectionViewCell")
+                                     forCellWithReuseIdentifier: CellIdentifiers.CollectionViewCellId)
         self.collectionView.showsVerticalScrollIndicator = false
         self.collectionView.backgroundColor = UIColor.gray
         collectionView.isHidden = true
@@ -86,4 +86,57 @@ extension MainViewController {
         }
     }
     
+    func invalidateLayoutAndReloadTheCollectionView() {
+        DispatchQueue.main.async {
+            self.collectionView?.collectionViewLayout.invalidateLayout()
+            self.collectionView?.reloadData()
+        }
+    }
+}
+
+//Orientation Support
+//invalidate the collection view layout and recalculate the visible cell sizes when the transition happens
+extension MainViewController {
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        guard
+            let previousTraitCollection = previousTraitCollection,
+            self.traitCollection.verticalSizeClass != previousTraitCollection.verticalSizeClass ||
+                self.traitCollection.horizontalSizeClass != previousTraitCollection.horizontalSizeClass
+            else {
+                return
+        }
+        invalidateLayoutAndReloadTheCollectionView()
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        self.estimateVisibleCellSizes(to: size)
+        coordinator.animate(alongsideTransition: { _ in
+        }, completion: { _ in
+            self.collectionView?.collectionViewLayout.invalidateLayout()
+        })
+    }
+    
+    //to calculate the preferred width for the estimated size
+    func preferredWith(forSize size: CGSize) -> CGFloat {
+        let noOfColumns: CGFloat = 1.0
+        return (size.width - 30) / noOfColumns
+    }
+    
+    //calcualting the estimated item size and to recalculate the visible cell sizes
+    func estimateVisibleCellSizes(to size: CGSize) {
+        guard let collectionView = self.collectionView else {
+            return
+        }
+        if let flowLayout = self.collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
+            flowLayout.estimatedItemSize = CGSize(width: self.preferredWith(forSize: size), height: 30)
+        }
+        collectionView.visibleCells.forEach({ cell in
+            if let cell = cell as? CollectionViewCell {
+                cell.setPreferred(width: self.preferredWith(forSize: size))
+            }
+        })
+    }
 }
