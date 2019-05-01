@@ -13,12 +13,15 @@ struct ServiceUrls {
 }
 struct TestDataFetchUrl {
     static let badJSONUrl = "https://dl.dropboxusercontent.com/2iodh4vg0eortkl/facts.json"
+    static let factsFetchInvalidUrl = ""
 }
 struct ErrorMessages {
     static let networkErrorMessgae           = "Network is not present, please try again later."
     static let commonErrorMessage            = "Some error occured, please try again later."
     static let invalidUrlErrorMessage        = "Invalid URL"
     static let jsonConversionErrorMessage    = "Could not convert data to UTF-8 format"
+    static let errorAlertTitle               = "Error"
+    static let okButtonTitle                 = "Ok"
 }
 
 struct CommonMessages {

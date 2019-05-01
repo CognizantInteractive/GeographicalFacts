@@ -57,4 +57,22 @@ class FactsNetworkingTests: XCTestCase {
         }
     }
 
+    //invalid url test
+    func testInvalidJSONUrl() {
+        let failureWaitExpectation = expectation(description: "Invalid URL Call")
+        NetworkManager.getFactJSONData(TestDataFetchUrl.factsFetchInvalidUrl) { (result) in
+            switch result {
+            case .failure:
+                failureWaitExpectation.fulfill()
+            default:
+                break
+            }
+        }
+        self.waitForExpectations(timeout: 10) { (err) in
+            if let error = err {
+                print("ERROR: \(error.localizedDescription)")
+                XCTAssertTrue(false, "Network timeout")
+            }
+        }
+    }
 }
