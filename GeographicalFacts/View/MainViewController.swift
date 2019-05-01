@@ -23,6 +23,7 @@ class MainViewController: UIViewController {
     init() {
         super.init(nibName: nil, bundle: nil)
         self.title = "Geographical Facts"
+        viewModel.delegate = self
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -138,5 +139,21 @@ extension MainViewController {
                 cell.setPreferred(width: self.preferredWith(forSize: size))
             }
         })
+    }
+}
+
+// MARK: - ImageDownloadHandler delegate
+extension MainViewController: ImageDownloadHandler {
+    
+    func updatedImageAtIndex(index: Int, cell: UICollectionViewCell, result: ImageDownloadResult) {
+        switch result {
+        case .success:
+            let visibleItems = self.collectionView.indexPathsForVisibleItems
+            for indexPath in visibleItems where indexPath.row == index {
+                collectionView.reloadItems(at: [IndexPath(row: index, section: 0)])
+            }
+        case .failure(let errorMessage):
+            print(errorMessage)
+        }
     }
 }

@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 class ViewModel: NSObject {
     var factData = FactData()
+    weak var delegate: ImageDownloadHandler?
     
     //invokes the network call for json download.
     func fetchFacts(_ endPointURL: String,
@@ -35,6 +36,30 @@ class ViewModel: NSObject {
         })
     }
     
+    //  This function downloads each fact image to be displayed.
+    //  Image gets saved in App's Cache folder once download is successfully completed,
+    //  so that next time this image can be used for display without downloading it again.
+    func getImageData(_ imageURL: String,
+                      _ completion: @escaping (ImageDownloadResult) -> Void) {
+        guard Reachability.isConnectedToNetwork() else {
+            return completion(.failure(ErrorMessages.networkErrorMessgae))
+        }
+        NetworkManager.getImageData(imageURL, { (result) in
+            switch result {
+            case .success(let imageData):
+                guard let newImageData = imageData as? UIImage else {
+                    return completion(.failure(ErrorMessages.commonErrorMessage))
+                }
+                //saving the image to cache
+                let factsFileManager = FactsFileManager()
+                _ =  factsFileManager.saveImageToCacheDirectory(newImageData: newImageData, imageURL: imageURL)
+                completion(.success)
+            case .failure(let errorMsg):
+                completion(.failure(errorMsg))
+            }
+        })
+    }
+    
     //This function removes the particular fact data if all the fact params are invalid
     func checkForValidFactData(data: FactData) {
         factData.title = data.title ??  CommonMessages.emptyString
@@ -53,6 +78,27 @@ class ViewModel: NSObject {
     
     func getEmptyTitle() -> String {
         return CommonMessages.emptyString
+    }
+    
+    //This function checks whether the particular fact image is already downloaded and saved in cache or not.
+    //If image is not present, it intiates the image download process for the particular fact.
+    func checkTheImageDownloadStatus(factModelData: Fact, index: Int, cell: UICollectionViewCell) {
+        guard let imageURL = factModelData.imageHref else { return }
+        let fileManager = FactsFileManager()
+        if  !fileManager.isImagePresentInCacheFolder(imageURL: imageURL) {
+            startImageDownLoadForIndex(factModelData: factModelData, index: index, cell: cell)
+        }
+    }
+    
+    //  This function initiates the image download, on completion it calls the
+    //  delegate method to reload the cell if it is a visible cell
+    func startImageDownLoadForIndex(factModelData: Fact, index: Int, cell: UICollectionViewCell) {
+        guard let imageURL = factModelData.imageHref else { return }
+        self.getImageData(imageURL, { [weak self] (result) in
+            DispatchQueue.main.async {
+                self?.delegate?.updatedImageAtIndex(index: index, cell: cell, result: result)
+            }
+        })
     }
 }
 
@@ -74,6 +120,7 @@ extension ViewModel: UICollectionViewDataSource {
                                                              for: indexPath) as? CollectionViewCell {
             if let factData =  self.factData.rows {
                 let factModelData = factData[indexPath.row]
+                checkTheImageDownloadStatus(factModelData: factModelData, index: indexPath.row, cell: factCell)
                 factCell.loadFactCellData(fact: factModelData)
             }
             factCell.layoutIfNeeded()

@@ -23,16 +23,28 @@ struct ErrorMessages {
     static let commonErrorMessage            = "Some error occured, please try again later."
     static let invalidUrlErrorMessage        = "Invalid URL"
     static let jsonConversionErrorMessage    = "Could not convert data to UTF-8 format"
+    static let imageConversionErrorMessage   = "Could not convert data to image"
     static let errorAlertTitle               = "Error"
     static let okButtonTitle                 = "Ok"
 }
-
 struct CommonMessages {
     static let emptyString          = ""
+}
+struct FactImages {
+    static let factImagesFolder = "FactsImages"
+}
+struct ImageNames {
+    static let defaultImageName = "defaultimage"
 }
 enum FactsFetchStatus {
     case success(AnyObject?), failure(String)
 }
 enum FactsFetchResult {
+    case success, failure(String)
+}
+enum ImageDownloadStatus {
+    case success(AnyObject?), failure(String)
+}
+enum ImageDownloadResult {
     case success, failure(String)
 }

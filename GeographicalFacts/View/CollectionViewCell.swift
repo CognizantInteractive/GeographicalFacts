@@ -74,11 +74,17 @@ extension CollectionViewCell {
 //        descriptionLabel.text = "Beavers are second only to humans"
 //    }
     
-     func loadFactCellData(fact: Fact) {
+    func loadFactCellData(fact: Fact) {
         titleLabel.text = fact.title ?? CommonMessages.emptyString
         descriptionLabel.text = fact.description ?? CommonMessages.emptyString
-        factImageView.image = UIImage(named: "defaultimage")
-     }
+        guard let imageURL = fact.imageHref  else { return }
+        let fileManager = FactsFileManager()
+        if let image = fileManager.loadFactImageFromCacheIfPresent(imageURL: imageURL) {
+            factImageView.image = image
+        } else {
+            factImageView.image = UIImage(named: ImageNames.defaultImageName)
+        }
+    }
     //Function to set the layout constraints for the subviews
     func setUpConstraintsForControls() {
         let marginGuide = contentView.layoutMarginsGuide

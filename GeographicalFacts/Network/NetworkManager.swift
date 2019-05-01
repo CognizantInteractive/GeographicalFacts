@@ -8,7 +8,7 @@
 
 import Foundation
 import Alamofire
-// Alamofire wrapper class to download Facts JSON
+// Alamofire wrapper class to download Facts JSON and image
 class NetworkManager: NSObject {
     
     //Function to get the json data from server
@@ -45,5 +45,27 @@ class NetworkManager: NSObject {
                 apiRequestCompletionHandler(.failure(error.localizedDescription))
             }
         })
+    }
+    
+    //Function to get the image data from server
+    public static func getImageData(_ imageURL: String,
+                                    _ apiRequestCompletionHandler:@escaping (ImageDownloadStatus) -> Void) {
+        guard let imageURL = URL(string: imageURL) else {
+            print(ErrorMessages.invalidUrlErrorMessage); return }
+        //request call and handling the response from the service call
+        Alamofire.request(imageURL).responseData { (response) in
+            switch response.result {
+            case .success:
+                if let imageData = response.data {
+                    guard let newImage = UIImage(data: imageData) else {
+                        apiRequestCompletionHandler(.failure(ErrorMessages.imageConversionErrorMessage))
+                        return
+                    }
+                    apiRequestCompletionHandler(.success(newImage as AnyObject?))
+                }
+            case .failure(let error as NSError):
+                apiRequestCompletionHandler(.failure(error.localizedDescription))
+            }
+        }
     }
 }
