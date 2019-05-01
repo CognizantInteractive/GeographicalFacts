@@ -33,8 +33,7 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = .white
         configureViews()
-        collectionView.reloadData()
-
+        getFactsData()
     }
 
     override func viewDidLayoutSubviews() {
@@ -60,9 +59,31 @@ extension MainViewController {
                                      forCellWithReuseIdentifier: "CollectionViewCell")
         self.collectionView.showsVerticalScrollIndicator = false
         self.collectionView.backgroundColor = UIColor.gray
-        collectionView.isHidden = false
+        collectionView.isHidden = true
         self.collectionView.dataSource = viewModel
         self.view.addSubview(self.collectionView)
+    }
+    
+    //function which invokes the fetchFacts() to fetch the Fact JSON from server
+    func getFactsData() {
+        viewModel.fetchFacts(ServiceUrls.factsFetchUrl, { [weak self] (result) in
+            DispatchQueue.main.async {
+                self?.updateUIAfterRefresh(result: result)
+            }
+        })
+    }
+    
+    //function which performs the UI updation after Fact JSON fetch
+    func updateUIAfterRefresh(result: FactsFetchResult) {
+        switch result {
+        case .success:
+            self.title = viewModel.getFactsTitle()
+            collectionView.isHidden = false
+            collectionView.reloadData()
+        case .failure(let errorMsg):
+            self.title = viewModel.getEmptyTitle()
+            print(errorMsg)
+        }
     }
     
 }

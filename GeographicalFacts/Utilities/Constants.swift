@@ -11,7 +11,9 @@ import Foundation
 struct ServiceUrls {
     static let factsFetchUrl = "https://dl.dropboxusercontent.com/s/2iodh4vg0eortkl/facts.json"
 }
-
+struct TestDataFetchUrl {
+    static let badJSONUrl = "https://dl.dropboxusercontent.com/2iodh4vg0eortkl/facts.json"
+}
 struct ErrorMessages {
     static let networkErrorMessgae           = "Network is not present, please try again later."
     static let commonErrorMessage            = "Some error occured, please try again later."

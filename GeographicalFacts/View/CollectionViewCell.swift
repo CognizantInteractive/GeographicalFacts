@@ -52,12 +52,17 @@ extension CollectionViewCell {
             contentView.addSubview(factImageView)
         }
     
-    func loadTheData() {
-        factImageView.image = UIImage(named: "defaultimage")
-        titleLabel.text = "Fact Title"
-        descriptionLabel.text = "Beavers are second only to humans"
-    }
+//    func loadTheData() {
+//        factImageView.image = UIImage(named: "defaultimage")
+//        titleLabel.text = "Fact Title"
+//        descriptionLabel.text = "Beavers are second only to humans"
+//    }
     
+     func loadFactCellData(fact: Fact) {
+        titleLabel.text = fact.title ?? CommonMessages.emptyString
+        descriptionLabel.text = fact.description ?? CommonMessages.emptyString
+        factImageView.image = UIImage(named: "defaultimage")
+     }
     //Function to set the layout constraints for the subviews
     func setUpConstraintsForControls() {
         let marginGuide = contentView.layoutMarginsGuide
