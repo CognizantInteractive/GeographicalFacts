@@ -13,6 +13,7 @@ import UIKit
 class ProgressIndicatorView {
     private var activityIndicator = UIActivityIndicatorView(style: .gray)
     
+    // MARK: - Functions
     //adding the activityindicator to the specified view and setting the constraints
     func addActivityIndicatorToTheView(view: UIView) {
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false

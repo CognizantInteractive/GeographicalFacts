@@ -12,7 +12,7 @@ import UIKit
 //Class which handles image data save in Cache folder
 class FactsFileManager {
     let fileManger = FileManager.default
-    
+    // MARK: - Functions
     //This function returns the folder path in which images are saved
     func getTheFactsImageFolderPath() -> String {
         let dirPaths = fileManger.urls(for: .cachesDirectory, in: .userDomainMask)

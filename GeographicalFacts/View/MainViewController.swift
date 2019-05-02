@@ -147,7 +147,7 @@ extension MainViewController {
     }
 }
 
-// MARK: - ImageDownloadHandler delegate
+// MARK: - ImageDownloadHandler delegate methods
 extension MainViewController: ImageDownloadHandler {
     //Function to inform that image download has started.
     func imageDownloadStartedAtIndex(index: Int, cell: UICollectionViewCell) {

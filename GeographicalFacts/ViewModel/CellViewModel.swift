@@ -16,6 +16,7 @@ class CellViewModel {
     init(factData: Fact) {
         self.factData = factData
     }
+    // MARK: - Functions
     func getFactTitle() -> String {
         return factData.title ??  CommonMessages.emptyString
     }

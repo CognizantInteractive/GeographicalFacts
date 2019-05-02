@@ -12,7 +12,7 @@ import UIKit
 class ViewModel: NSObject {
     var factData = FactData()
     weak var delegate: ImageDownloadHandler?
-    
+    // MARK: - Functions
     //invokes the network call for json download.
     func fetchFacts(_ endPointURL: String,
                     _ completion: @escaping (FactsFetchResult) -> Void) {
