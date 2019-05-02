@@ -117,8 +117,14 @@ extension MainViewController {
             collectionView.reloadData()
         case .failure(let errorMsg):
             self.title = viewModel.getEmptyTitle()
-            print(errorMsg)
+            showErrorAlert(message: errorMsg)
         }
+    }
+    
+    //function to display any type of error message
+    func showErrorAlert(message: String) {
+        let alertController = UIAlertController.showAlertView(title: ErrorMessages.errorAlertTitle, message: message)
+        self.present(alertController, animated: true, completion: nil)
     }
     
     func invalidateLayoutAndReloadTheCollectionView() {
@@ -179,7 +185,24 @@ extension MainViewController {
 // MARK: - ImageDownloadHandler delegate
 extension MainViewController: ImageDownloadHandler {
     
-    func updatedImageAtIndex(index: Int, cell: UICollectionViewCell, result: ImageDownloadResult) {
+    //Function to inform that image download has started.
+    func imageDownloadStartedAtIndex(index: Int,
+                                     cell: UICollectionViewCell) {
+        if let factCell = cell as? CollectionViewCell {
+            factCell.showActivityIndicatorView(true)
+        }
+        
+    }
+    
+    //Function to inform that image download is completed.
+    func imageDownloadCompletedAtIndex(index: Int,
+                                       cell: UICollectionViewCell,
+                                       result: ImageDownloadResult) {
+        guard let factCell = cell as? CollectionViewCell else {
+            return
+        }
+        factCell.showActivityIndicatorView(false)
+        
         switch result {
         case .success:
             let visibleItems = self.collectionView.indexPathsForVisibleItems

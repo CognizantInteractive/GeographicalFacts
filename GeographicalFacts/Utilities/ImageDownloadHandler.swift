@@ -11,6 +11,13 @@ import Foundation
 import UIKit
 
 protocol ImageDownloadHandler: class {
-    //Protocol function to inform that image download is completed.
-    func updatedImageAtIndex(index: Int, cell: UICollectionViewCell, result: ImageDownloadResult)
+    
+    //Function to inform that image download has started.
+    func imageDownloadStartedAtIndex(index: Int,
+                                     cell: UICollectionViewCell)
+    
+    //Function to inform that image download is completed.
+    func imageDownloadCompletedAtIndex(index: Int,
+                                       cell: UICollectionViewCell,
+                                       result: ImageDownloadResult)
 }

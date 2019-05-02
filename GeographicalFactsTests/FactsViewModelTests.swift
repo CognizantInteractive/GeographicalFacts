@@ -70,7 +70,7 @@ class FactsViewModelTests: XCTestCase {
     
     //This test case will be passed if the fact image is downloaded successfully
     func testGetFactImageSuccessCall() {
-        //calling deleteImagesFolder() to delete all the images which are downloaded and saved
+        //deleting the saved images folder before downloading the image
         factsFileManager.deleteImagesFolder()
         let successWaitExpectation = expectation(description: "FactsImageDownloadSuccess")
         viewModel.getImageData(ImageUrls.imageDownloadSuccessUrl, {(result) in

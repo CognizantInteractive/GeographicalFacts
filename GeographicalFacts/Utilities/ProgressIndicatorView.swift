@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+
 //Custom class for adding activityindicator
 class ProgressIndicatorView {
     private var activityIndicator = UIActivityIndicatorView(style: .gray)

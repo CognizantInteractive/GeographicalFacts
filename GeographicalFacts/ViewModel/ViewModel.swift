@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+
 class ViewModel: NSObject {
     var factData = FactData()
     weak var delegate: ImageDownloadHandler?
@@ -98,9 +99,13 @@ class ViewModel: NSObject {
         guard let imageURL = factModelData.imageHref else {
             return
         }
+        self.delegate?.imageDownloadStartedAtIndex(index: index,
+                                                   cell: cell)
         self.getImageData(imageURL, { [weak self] (result) in
             DispatchQueue.main.async {
-                self?.delegate?.updatedImageAtIndex(index: index, cell: cell, result: result)
+                self?.delegate?.imageDownloadCompletedAtIndex(index: index,
+                                                              cell: cell,
+                                                              result: result)
             }
         })
     }

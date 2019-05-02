@@ -8,6 +8,7 @@
 
 import Foundation
 import Alamofire
+
 // Alamofire wrapper class to download Facts JSON and image
 class NetworkManager: NSObject {
     

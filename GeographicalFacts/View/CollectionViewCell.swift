@@ -8,16 +8,19 @@
 
 import Foundation
 import UIKit
+
 class CollectionViewCell: UICollectionViewCell {
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.boldSystemFont(ofSize: 18)
         return label
     }()
     lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = UIColor.lightGray
         return label
     }()
@@ -25,7 +28,12 @@ class CollectionViewCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.backgroundColor = .clear
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
+    }()
+    lazy private var progressIndicatorView: ProgressIndicatorView = {
+        let activityIndicatorView = ProgressIndicatorView()
+        return activityIndicatorView
     }()
     lazy var contentViewWidth: NSLayoutConstraint = {
         let viewWidth = contentView.widthAnchor.constraint(equalToConstant: bounds.size.width)
@@ -51,6 +59,7 @@ class CollectionViewCell: UICollectionViewCell {
         contentViewWidth.constant = bounds.size.width
         return contentView.systemLayoutSizeFitting(CGSize(width: targetSize.width, height: 30))
     }
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         clearsContextBeforeDrawing = true
@@ -58,21 +67,18 @@ class CollectionViewCell: UICollectionViewCell {
         titleLabel.text = nil
         descriptionLabel.text = nil
         factImageView.image = nil
+        showActivityIndicatorView(false)
     }
 }
 
 extension CollectionViewCell {
+    // MARK: - Functions
     func addSubViews() {
             contentView.addSubview(titleLabel)
             contentView.addSubview(descriptionLabel)
             contentView.addSubview(factImageView)
+            progressIndicatorView.addActivityIndicatorToTheView(view: factImageView)
         }
-    
-//    func loadTheData() {
-//        factImageView.image = UIImage(named: "defaultimage")
-//        titleLabel.text = "Fact Title"
-//        descriptionLabel.text = "Beavers are second only to humans"
-//    }
     
     func loadFactCellData(fact: Fact) {
         titleLabel.text = fact.title ?? CommonMessages.emptyString
@@ -90,15 +96,15 @@ extension CollectionViewCell {
     //Function to set the layout constraints for the subviews
     func setUpConstraintsForControls() {
         let marginGuide = contentView.layoutMarginsGuide
-        factImageView.translatesAutoresizingMaskIntoConstraints = false
+        
         factImageView.leadingAnchor.constraint(equalTo: marginGuide.leadingAnchor, constant: 5).isActive = true
         factImageView.trailingAnchor.constraint(equalTo: marginGuide.trailingAnchor, constant: 5).isActive = true
         factImageView.topAnchor.constraint(equalTo: marginGuide.topAnchor, constant: 5).isActive = true
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        
         titleLabel.leadingAnchor.constraint(equalTo: marginGuide.leadingAnchor).isActive = true
         titleLabel.topAnchor.constraint(equalTo: factImageView.bottomAnchor, constant: 5).isActive = true
         titleLabel.trailingAnchor.constraint(equalTo: marginGuide.trailingAnchor).isActive = true
-        descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
+        
         descriptionLabel.leadingAnchor.constraint(equalTo: marginGuide.leadingAnchor).isActive = true
         descriptionLabel.bottomAnchor.constraint(equalTo: marginGuide.bottomAnchor).isActive = true
         descriptionLabel.trailingAnchor.constraint(equalTo: marginGuide.trailingAnchor).isActive = true
@@ -108,5 +114,9 @@ extension CollectionViewCell {
     func setPreferred(width: CGFloat) {
         titleLabel.preferredMaxLayoutWidth = width
         descriptionLabel.preferredMaxLayoutWidth = width
+    }
+    
+    func showActivityIndicatorView(_ show: Bool) {
+        progressIndicatorView.displayActivityIndicatorView(show: show)
     }
 }
