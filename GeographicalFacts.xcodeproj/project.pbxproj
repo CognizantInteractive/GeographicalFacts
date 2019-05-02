@@ -26,6 +26,7 @@
 		26F8FF49227AA7CF00BBFB49 /* ProgressIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F8FF48227AA7CF00BBFB49 /* ProgressIndicatorView.swift */; };
 		26F8FF4B227ABB0C00BBFB49 /* UIAlertController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F8FF4A227ABB0C00BBFB49 /* UIAlertController+Extension.swift */; };
 		26F8FF4D227AC02E00BBFB49 /* FactsAlertViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F8FF4C227AC02E00BBFB49 /* FactsAlertViewTests.swift */; };
+		26F8FF4F227ACA1300BBFB49 /* CellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F8FF4E227ACA1300BBFB49 /* CellViewModel.swift */; };
 		4EE442462437CE227D8760D5 /* Pods_GeographicalFacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F6D3381CB04585F11A0E60 /* Pods_GeographicalFacts.framework */; };
 		8DB69B206FDE5CD7D5A7923B /* Pods_GeographicalFactsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CEFDE1970154A4456E90302 /* Pods_GeographicalFactsTests.framework */; };
 /* End PBXBuildFile section */
@@ -65,6 +66,7 @@
 		26F8FF48227AA7CF00BBFB49 /* ProgressIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressIndicatorView.swift; sourceTree = "<group>"; };
 		26F8FF4A227ABB0C00BBFB49 /* UIAlertController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Extension.swift"; sourceTree = "<group>"; };
 		26F8FF4C227AC02E00BBFB49 /* FactsAlertViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactsAlertViewTests.swift; sourceTree = "<group>"; };
+		26F8FF4E227ACA1300BBFB49 /* CellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellViewModel.swift; sourceTree = "<group>"; };
 		3CEFDE1970154A4456E90302 /* Pods_GeographicalFactsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GeographicalFactsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		715409AB60641A86C6C834A1 /* Pods-GeographicalFacts.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GeographicalFacts.debug.xcconfig"; path = "Target Support Files/Pods-GeographicalFacts/Pods-GeographicalFacts.debug.xcconfig"; sourceTree = "<group>"; };
 		9C5D5097F058AB5C7E685753 /* Pods-GeographicalFactsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GeographicalFactsTests.debug.xcconfig"; path = "Target Support Files/Pods-GeographicalFactsTests/Pods-GeographicalFactsTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -154,6 +156,7 @@
 			isa = PBXGroup;
 			children = (
 				26522A2D22781836005207AB /* ViewModel.swift */,
+				26F8FF4E227ACA1300BBFB49 /* CellViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -409,6 +412,7 @@
 				26F8FF362278619300BBFB49 /* Constants.swift in Sources */,
 				26F8FF412279FCBA00BBFB49 /* ImageDownloadHandler.swift in Sources */,
 				26522A302278191F005207AB /* CollectionViewCell.swift in Sources */,
+				26F8FF4F227ACA1300BBFB49 /* CellViewModel.swift in Sources */,
 				26522A0E227815EF005207AB /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

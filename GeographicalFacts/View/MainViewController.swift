@@ -205,11 +205,13 @@ extension MainViewController: ImageDownloadHandler {
         
         switch result {
         case .success:
+            factCell.cellViewModel?.imageDownloadState = .downloadSuccess
             let visibleItems = self.collectionView.indexPathsForVisibleItems
             for indexPath in visibleItems where indexPath.row == index {
                 collectionView.reloadItems(at: [IndexPath(row: index, section: 0)])
             }
         case .failure(let errorMessage):
+            factCell.cellViewModel?.imageDownloadState = .downloadFailed
             print(errorMessage)
         }
     }

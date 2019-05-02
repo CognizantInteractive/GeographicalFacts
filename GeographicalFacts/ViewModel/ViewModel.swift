@@ -89,6 +89,9 @@ class ViewModel: NSObject {
         }
         let fileManager = FactsFileManager()
         if  !fileManager.isImagePresentInCacheFolder(imageURL: imageURL) {
+            if let factCell = cell as? CollectionViewCell {
+                factCell.cellViewModel?.imageDownloadState = .downloadStarted
+            }
             startImageDownLoadForIndex(factModelData: factModelData, index: index, cell: cell)
         }
     }
@@ -140,7 +143,7 @@ extension ViewModel: UICollectionViewDataSource {
             if let factData =  self.factData.rows {
                 let factModelData = factData[indexPath.row]
                 checkTheImageDownloadStatus(factModelData: factModelData, index: indexPath.row, cell: factCell)
-                factCell.loadFactCellData(fact: factModelData)
+                factCell.cellViewModel = CellViewModel(factData: factModelData)
             }
             factCell.layoutIfNeeded()
             return factCell

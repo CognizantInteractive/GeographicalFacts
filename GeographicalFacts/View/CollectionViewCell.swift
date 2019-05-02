@@ -69,6 +69,22 @@ class CollectionViewCell: UICollectionViewCell {
         factImageView.image = nil
         showActivityIndicatorView(false)
     }
+    
+    var cellViewModel: CellViewModel? {
+        didSet {
+            titleLabel.text = cellViewModel?.factData.title
+            descriptionLabel.text = cellViewModel?.factData.description
+            guard let imageURL = cellViewModel?.factData.imageHref  else {
+                return
+            }
+            let fileManager = FactsFileManager()
+            if let image = fileManager.loadFactImageFromCacheIfPresent(imageURL: imageURL) {
+                factImageView.image = image
+            } else {
+                factImageView.image = UIImage(named: ImageNames.defaultImageName)
+            }
+        }
+    }
 }
 
 extension CollectionViewCell {
@@ -80,19 +96,6 @@ extension CollectionViewCell {
             progressIndicatorView.addActivityIndicatorToTheView(view: factImageView)
         }
     
-    func loadFactCellData(fact: Fact) {
-        titleLabel.text = fact.title ?? CommonMessages.emptyString
-        descriptionLabel.text = fact.description ?? CommonMessages.emptyString
-        guard let imageURL = fact.imageHref  else {
-            return
-        }
-        let fileManager = FactsFileManager()
-        if let image = fileManager.loadFactImageFromCacheIfPresent(imageURL: imageURL) {
-            factImageView.image = image
-        } else {
-            factImageView.image = UIImage(named: ImageNames.defaultImageName)
-        }
-    }
     //Function to set the layout constraints for the subviews
     func setUpConstraintsForControls() {
         let marginGuide = contentView.layoutMarginsGuide

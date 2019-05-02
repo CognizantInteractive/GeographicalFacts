@@ -57,3 +57,10 @@ enum ImageDownloadStatus {
 enum ImageDownloadResult {
     case success, failure(String)
 }
+//image download states
+enum ImageDownloadState {
+    case downloadNotStarted
+    case downloadStarted
+    case downloadSuccess
+    case downloadFailed
+}
