@@ -17,28 +17,24 @@ class MainViewController: UIViewController {
         let flowLayout = UICollectionViewFlowLayout()
         let width = UIScreen.main.bounds.size.width
         //estimated size
-        flowLayout.estimatedItemSize = CGSize(width: self.preferredWith(forSize: self.view.bounds.size),
+        flowLayout.estimatedItemSize = CGSize(width: viewModel.getPreferredWith(forSize: self.view.bounds.size),
                                               height: CGFloat(Float(30)))
         return flowLayout
     }()
-    
     init() {
         super.init(nibName: nil, bundle: nil)
-        self.title = CommonMessages.loadingTitle
+        self.title = viewModel.getLoadingTitle()
         viewModel.delegate = self
     }
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
         configureViews()
         getFactsData()
     }
-
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         let width = self.view.frame.size.width
@@ -53,12 +49,6 @@ class MainViewController: UIViewController {
 extension MainViewController {
     // MARK: - Functions
     func configureViews() {
-        configureCollectionView()
-        configureRefreshControl()
-        configureProgressIndicatorView()
-    }
-    
-    func configureCollectionView() {
         self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         self.collectionView.register(CollectionViewCell.self,
                                      forCellWithReuseIdentifier: CellIdentifiers.CollectionViewCellId)
@@ -67,35 +57,22 @@ extension MainViewController {
         collectionView.isHidden = true
         self.collectionView.dataSource = viewModel
         self.view.addSubview(self.collectionView)
-    }
-    
-    func configureRefreshControl() {
+        
         refreshControl = UIRefreshControl()
         refreshControl.tintColor = UIColor.blue
         refreshControl.attributedTitle = NSAttributedString(string: CommonMessages.pullToRefresh)
         refreshControl.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
-        if #available(iOS 10.0, *) {
-            collectionView.refreshControl = refreshControl
-        } else {
-            collectionView.addSubview(refreshControl)
-        }
-    }
-    
-    //adding the progressindicator view
-    func configureProgressIndicatorView() {
+        
         progressIndicatorView.addActivityIndicatorToTheView(view: self.view)
     }
-    
     //function which gets called on refreshcontrol pull
     @objc func refresh(sender: AnyObject) {
         getFactsData()
     }
-    
     //function to stop the refresh control
     func stopRefreshControl() {
         refreshControl.endRefreshing()
     }
-    
     //function which invokes the fetchFacts() to fetch the Fact JSON from server
     func getFactsData() {
         progressIndicatorView.displayActivityIndicatorView(show: true)
@@ -105,7 +82,6 @@ extension MainViewController {
             }
         })
     }
-    
     //function which performs the UI updation after Fact JSON fetch
     func updateUIAfterRefresh(result: FactsFetchResult) {
         progressIndicatorView.displayActivityIndicatorView(show: false)
@@ -120,7 +96,6 @@ extension MainViewController {
             showErrorAlert(message: errorMsg)
         }
     }
-    
     //function to display any type of error message
     func showErrorAlert(message: String) {
         let alertController = UIAlertController.showAlertView(title: ErrorMessages.errorAlertTitle, message: message)
@@ -134,11 +109,9 @@ extension MainViewController {
         }
     }
 }
-
-//Orientation Support
-//invalidate the collection view layout and recalculate the visible cell sizes when the transition happens
+// MARK: - Orientation Functions
 extension MainViewController {
-    
+    //invalidate the collection view layout and recalculate the visible cell sizes when the transition happens
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         guard
@@ -150,7 +123,6 @@ extension MainViewController {
         }
         invalidateLayoutAndReloadTheCollectionView()
     }
-    
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         self.estimateVisibleCellSizes(to: size)
@@ -159,24 +131,17 @@ extension MainViewController {
             self.collectionView?.collectionViewLayout.invalidateLayout()
         })
     }
-    
-    //to calculate the preferred width for the estimated size
-    func preferredWith(forSize size: CGSize) -> CGFloat {
-        let noOfColumns = viewModel.getNoOfColumns()
-        return (size.width - 30) / noOfColumns
-    }
-    
     //calcualting the estimated item size and to recalculate the visible cell sizes
     func estimateVisibleCellSizes(to size: CGSize) {
         guard let collectionView = self.collectionView else {
             return
         }
         if let flowLayout = self.collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
-            flowLayout.estimatedItemSize = CGSize(width: self.preferredWith(forSize: size), height: 30)
+            flowLayout.estimatedItemSize = CGSize(width: viewModel.getPreferredWith(forSize: size), height: 30)
         }
         collectionView.visibleCells.forEach({ cell in
             if let cell = cell as? CollectionViewCell {
-                cell.setPreferred(width: self.preferredWith(forSize: size))
+                cell.setPreferred(width: viewModel.getPreferredWith(forSize: size))
             }
         })
     }
@@ -184,25 +149,18 @@ extension MainViewController {
 
 // MARK: - ImageDownloadHandler delegate
 extension MainViewController: ImageDownloadHandler {
-    
     //Function to inform that image download has started.
-    func imageDownloadStartedAtIndex(index: Int,
-                                     cell: UICollectionViewCell) {
+    func imageDownloadStartedAtIndex(index: Int, cell: UICollectionViewCell) {
         if let factCell = cell as? CollectionViewCell {
             factCell.showActivityIndicatorView(true)
         }
-        
     }
-    
     //Function to inform that image download is completed.
-    func imageDownloadCompletedAtIndex(index: Int,
-                                       cell: UICollectionViewCell,
-                                       result: ImageDownloadResult) {
+    func imageDownloadCompletedAtIndex(index: Int, cell: UICollectionViewCell, result: ImageDownloadResult) {
         guard let factCell = cell as? CollectionViewCell else {
             return
         }
         factCell.showActivityIndicatorView(false)
-        
         switch result {
         case .success:
             factCell.cellViewModel?.imageDownloadState = .downloadSuccess

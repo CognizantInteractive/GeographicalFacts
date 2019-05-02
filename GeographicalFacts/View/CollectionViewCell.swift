@@ -72,16 +72,10 @@ class CollectionViewCell: UICollectionViewCell {
     
     var cellViewModel: CellViewModel? {
         didSet {
-            titleLabel.text = cellViewModel?.factData.title
-            descriptionLabel.text = cellViewModel?.factData.description
-            guard let imageURL = cellViewModel?.factData.imageHref  else {
-                return
-            }
-            let fileManager = FactsFileManager()
-            if let image = fileManager.loadFactImageFromCacheIfPresent(imageURL: imageURL) {
-                factImageView.image = image
-            } else {
-                factImageView.image = UIImage(named: ImageNames.defaultImageName)
+            titleLabel.text = cellViewModel?.getFactTitle()
+            descriptionLabel.text = cellViewModel?.getFactDescription()
+            if let factImage = cellViewModel?.getFactImage() {
+                factImageView.image = factImage
             }
         }
     }

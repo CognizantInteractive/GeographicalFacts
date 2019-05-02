@@ -19,14 +19,14 @@ class ViewModel: NSObject {
         guard Reachability.isConnectedToNetwork() else {
             return completion(.failure(ErrorMessages.networkErrorMessgae))
         }
-        NetworkManager.getFactJSONData(endPointURL, {(result) in
+        NetworkManager.getFactJSONData(endPointURL, {[weak self](result) in
             switch result {
             case .success(let factData):
                 guard let parsedData = factData as? FactData else {
                     return completion(.failure(ErrorMessages.commonErrorMessage))
                 }
-                self.checkForValidFactData(data: parsedData)
-                if self.factData.rows != nil {
+                self?.checkForValidFactData(data: parsedData)
+                if self?.factData.rows != nil {
                     return completion(.success)
                 } else {
                     return completion(.failure(ErrorMessages.commonErrorMessage))
@@ -81,6 +81,9 @@ class ViewModel: NSObject {
         return CommonMessages.emptyString
     }
     
+    func getLoadingTitle() -> String {
+         return CommonMessages.loadingTitle
+    }
     //This function checks whether the particular fact image is already downloaded and saved in cache or not.
     //If image is not present, it intiates the image download process for the particular fact.
     func checkTheImageDownloadStatus(factModelData: Fact, index: Int, cell: UICollectionViewCell) {
@@ -121,6 +124,11 @@ class ViewModel: NSObject {
             noOfColumns = 2.0
         }
         return noOfColumns
+    }
+    
+    func getPreferredWith(forSize size: CGSize) -> CGFloat {
+        let noOfColumns = getNoOfColumns()
+        return (size.width - 30) / noOfColumns
     }
 }
 
