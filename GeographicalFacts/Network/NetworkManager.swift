@@ -51,7 +51,8 @@ class NetworkManager: NSObject {
     public static func getImageData(_ imageURL: String,
                                     _ apiRequestCompletionHandler:@escaping (ImageDownloadStatus) -> Void) {
         guard let imageURL = URL(string: imageURL) else {
-            print(ErrorMessages.invalidUrlErrorMessage); return }
+            return
+        }
         //request call and handling the response from the service call
         Alamofire.request(imageURL).responseData { (response) in
             switch response.result {

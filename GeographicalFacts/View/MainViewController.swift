@@ -10,6 +10,8 @@ import UIKit
 
 class MainViewController: UIViewController {
     private var collectionView: UICollectionView!
+    private var progressIndicatorView = ProgressIndicatorView()
+    private var refreshControl: UIRefreshControl!
     private var viewModel = ViewModel()
     private lazy var flowLayout: UICollectionViewFlowLayout = {
         let flowLayout = UICollectionViewFlowLayout()
@@ -22,7 +24,7 @@ class MainViewController: UIViewController {
     
     init() {
         super.init(nibName: nil, bundle: nil)
-        self.title = "Geographical Facts"
+        self.title = CommonMessages.loadingTitle
         viewModel.delegate = self
     }
     
@@ -32,7 +34,7 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = UIColor.white
         configureViews()
         getFactsData()
     }
@@ -49,9 +51,11 @@ class MainViewController: UIViewController {
 }
 
 extension MainViewController {
-    
+    // MARK: - Functions
     func configureViews() {
         configureCollectionView()
+        configureRefreshControl()
+        configureProgressIndicatorView()
     }
     
     func configureCollectionView() {
@@ -65,8 +69,36 @@ extension MainViewController {
         self.view.addSubview(self.collectionView)
     }
     
+    func configureRefreshControl() {
+        refreshControl = UIRefreshControl()
+        refreshControl.tintColor = UIColor.blue
+        refreshControl.attributedTitle = NSAttributedString(string: CommonMessages.pullToRefresh)
+        refreshControl.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
+        if #available(iOS 10.0, *) {
+            collectionView.refreshControl = refreshControl
+        } else {
+            collectionView.addSubview(refreshControl)
+        }
+    }
+    
+    //adding the progressindicator view
+    func configureProgressIndicatorView() {
+        progressIndicatorView.addActivityIndicatorToTheView(view: self.view)
+    }
+    
+    //function which gets called on refreshcontrol pull
+    @objc func refresh(sender: AnyObject) {
+        getFactsData()
+    }
+    
+    //function to stop the refresh control
+    func stopRefreshControl() {
+        refreshControl.endRefreshing()
+    }
+    
     //function which invokes the fetchFacts() to fetch the Fact JSON from server
     func getFactsData() {
+        progressIndicatorView.displayActivityIndicatorView(show: true)
         viewModel.fetchFacts(ServiceUrls.factsFetchUrl, { [weak self] (result) in
             DispatchQueue.main.async {
                 self?.updateUIAfterRefresh(result: result)
@@ -76,6 +108,8 @@ extension MainViewController {
     
     //function which performs the UI updation after Fact JSON fetch
     func updateUIAfterRefresh(result: FactsFetchResult) {
+        progressIndicatorView.displayActivityIndicatorView(show: false)
+        stopRefreshControl()
         switch result {
         case .success:
             self.title = viewModel.getFactsTitle()
@@ -122,7 +156,7 @@ extension MainViewController {
     
     //to calculate the preferred width for the estimated size
     func preferredWith(forSize size: CGSize) -> CGFloat {
-        let noOfColumns: CGFloat = 1.0
+        let noOfColumns = viewModel.getNoOfColumns()
         return (size.width - 30) / noOfColumns
     }
     

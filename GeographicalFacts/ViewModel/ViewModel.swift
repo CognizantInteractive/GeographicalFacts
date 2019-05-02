@@ -83,7 +83,9 @@ class ViewModel: NSObject {
     //This function checks whether the particular fact image is already downloaded and saved in cache or not.
     //If image is not present, it intiates the image download process for the particular fact.
     func checkTheImageDownloadStatus(factModelData: Fact, index: Int, cell: UICollectionViewCell) {
-        guard let imageURL = factModelData.imageHref else { return }
+        guard let imageURL = factModelData.imageHref else {
+            return
+        }
         let fileManager = FactsFileManager()
         if  !fileManager.isImagePresentInCacheFolder(imageURL: imageURL) {
             startImageDownLoadForIndex(factModelData: factModelData, index: index, cell: cell)
@@ -93,12 +95,24 @@ class ViewModel: NSObject {
     //  This function initiates the image download, on completion it calls the
     //  delegate method to reload the cell if it is a visible cell
     func startImageDownLoadForIndex(factModelData: Fact, index: Int, cell: UICollectionViewCell) {
-        guard let imageURL = factModelData.imageHref else { return }
+        guard let imageURL = factModelData.imageHref else {
+            return
+        }
         self.getImageData(imageURL, { [weak self] (result) in
             DispatchQueue.main.async {
                 self?.delegate?.updatedImageAtIndex(index: index, cell: cell, result: result)
             }
         })
+    }
+    
+    //function to return the number of columns
+    func getNoOfColumns() -> CGFloat {
+        var noOfColumns: CGFloat = 1.0
+        let deviceModel = UIDevice.current.model
+        if deviceModel == DeviceModel.iPadModel {
+            noOfColumns = 2.0
+        }
+        return noOfColumns
     }
 }
 

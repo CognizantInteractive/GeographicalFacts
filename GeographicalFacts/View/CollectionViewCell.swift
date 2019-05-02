@@ -35,7 +35,7 @@ class CollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.backgroundColor = .white
+        contentView.backgroundColor = UIColor.white
         contentView.translatesAutoresizingMaskIntoConstraints = false
         addSubViews()
         setUpConstraintsForControls()
@@ -77,7 +77,9 @@ extension CollectionViewCell {
     func loadFactCellData(fact: Fact) {
         titleLabel.text = fact.title ?? CommonMessages.emptyString
         descriptionLabel.text = fact.description ?? CommonMessages.emptyString
-        guard let imageURL = fact.imageHref  else { return }
+        guard let imageURL = fact.imageHref  else {
+            return
+        }
         let fileManager = FactsFileManager()
         if let image = fileManager.loadFactImageFromCacheIfPresent(imageURL: imageURL) {
             factImageView.image = image

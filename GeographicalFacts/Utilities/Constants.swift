@@ -33,6 +33,11 @@ struct ErrorMessages {
 }
 struct CommonMessages {
     static let emptyString          = ""
+    static let loadingTitle         = "Loading, Please wait.."
+    static let pullToRefresh        = "Pull to refresh.."
+}
+struct DeviceModel {
+    static let iPadModel = "iPad"
 }
 struct FactImages {
     static let factImagesFolder = "FactsImages"

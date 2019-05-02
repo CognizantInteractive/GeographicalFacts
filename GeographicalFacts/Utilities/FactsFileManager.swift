@@ -25,7 +25,8 @@ class FactsFileManager {
     func saveImageToCacheDirectory(newImageData: UIImage, imageURL: String) -> Bool {
         var success = false
         guard let imageURL = URL(string: imageURL) else {
-            print(ErrorMessages.invalidUrlErrorMessage); return false }
+            return false
+        }
         let imageName = imageURL.lastPathComponent
         let factsImagesFolderPath = getTheFactsImageFolderPath()
         do {
@@ -35,7 +36,9 @@ class FactsFileManager {
             }
             let imagePATH = getTheFactsImageFolderPath().appending(imageName)
             if !fileManger.fileExists(atPath: imagePATH) {
-                guard let imageData = newImageData.jpegData(compressionQuality: 0.75) else { return false }
+                guard let imageData = newImageData.jpegData(compressionQuality: 0.75) else {
+                    return false
+                }
                 success = fileManger.createFile(atPath: imagePATH as String, contents: imageData, attributes: nil)
             }
         } catch let error as NSError {
@@ -48,7 +51,8 @@ class FactsFileManager {
     func loadFactImageFromCacheIfPresent(imageURL: String) -> UIImage? {
         var loadedImage: UIImage?
         guard let imageURL = URL(string: imageURL) else {
-            print(ErrorMessages.invalidUrlErrorMessage); return nil }
+            return nil
+        }
         let imageName = imageURL.lastPathComponent
         let imagePath = getTheFactsImageFolderPath().appending(imageName)
         if fileManger.fileExists(atPath: imagePath) {
@@ -61,7 +65,8 @@ class FactsFileManager {
     func isImagePresentInCacheFolder(imageURL: String) -> Bool {
         var isImageAlreadyPresent = false
         guard let imageURL = URL(string: imageURL) else {
-            print(ErrorMessages.invalidUrlErrorMessage); return false }
+            return false
+        }
         let imageName = imageURL.lastPathComponent
         let imagePath = getTheFactsImageFolderPath().appending(imageName)
         if fileManger.fileExists(atPath: imagePath) {
