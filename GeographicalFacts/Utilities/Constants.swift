@@ -15,6 +15,10 @@ struct TestDataFetchUrl {
     static let badJSONUrl = "https://dl.dropboxusercontent.com/2iodh4vg0eortkl/facts.json"
     static let factsFetchInvalidUrl = ""
 }
+struct ImageUrls {
+    static let imageDownloadFailUrl = "http://files.turbosquid.com/Preview/trebucheta.84b2-6ce718a327a9Larger.jpg"
+    static let imageDownloadSuccessUrl = "http://images.findicons.com/files/icons/662/world_flag/128/flag_of_canada.png"
+}
 struct CellIdentifiers {
     static let CollectionViewCellId = "CollectionViewCell"
 }
