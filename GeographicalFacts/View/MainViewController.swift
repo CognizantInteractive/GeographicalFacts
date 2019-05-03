@@ -62,7 +62,11 @@ extension MainViewController {
         refreshControl.tintColor = UIColor.blue
         refreshControl.attributedTitle = NSAttributedString(string: CommonMessages.pullToRefresh)
         refreshControl.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
-        
+        if #available(iOS 10.0, *) {
+            collectionView.refreshControl = refreshControl
+        } else {
+            collectionView.addSubview(refreshControl)
+        }
         progressIndicatorView.addActivityIndicatorToTheView(view: self.view)
     }
     //function which gets called on refreshcontrol pull
