@@ -14,7 +14,7 @@ class CollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.font = Fonts.titleFont
         return label
     }()
     lazy var descriptionLabel: UILabel = {
@@ -57,7 +57,7 @@ class CollectionViewCell: UICollectionViewCell {
         horizontalFittingPriority: UILayoutPriority,
                                           verticalFittingPriority: UILayoutPriority) -> CGSize {
         contentViewWidth.constant = bounds.size.width
-        return contentView.systemLayoutSizeFitting(CGSize(width: targetSize.width, height: 30))
+        return contentView.systemLayoutSizeFitting(CGSize(width: targetSize.width, height: CellSize.estimatedHeight))
     }
     
     override func prepareForReuse() {
@@ -74,8 +74,15 @@ class CollectionViewCell: UICollectionViewCell {
         didSet {
             titleLabel.text = cellViewModel?.getFactTitle()
             descriptionLabel.text = cellViewModel?.getFactDescription()
-            if let factImage = cellViewModel?.getFactImage() {
-                factImageView.image = factImage
+            guard let imageURLString = cellViewModel?.factData.imageHref  else {
+                return
+            }
+            if let image = FactsFileManager.fileManager.loadFactImageFromCache(imageUrlString: imageURLString) {
+                showActivityIndicatorView(false)
+                factImageView.image = image
+            } else {
+                factImageView.image =  UIImage(named: ImageNames.defaultImageName)
+                showActivityIndicatorView(true)
             }
         }
     }
@@ -84,11 +91,11 @@ class CollectionViewCell: UICollectionViewCell {
 extension CollectionViewCell {
     // MARK: - Functions
     func addSubViews() {
-            contentView.addSubview(titleLabel)
-            contentView.addSubview(descriptionLabel)
-            contentView.addSubview(factImageView)
-            progressIndicatorView.addActivityIndicatorToTheView(view: factImageView)
-        }
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(descriptionLabel)
+        contentView.addSubview(factImageView)
+        progressIndicatorView.addActivityIndicatorToTheView(view: factImageView)
+    }
     
     //Function to set the layout constraints for the subviews
     func setUpConstraintsForControls() {
@@ -103,7 +110,7 @@ extension CollectionViewCell {
         titleLabel.trailingAnchor.constraint(equalTo: marginGuide.trailingAnchor).isActive = true
         
         descriptionLabel.leadingAnchor.constraint(equalTo: marginGuide.leadingAnchor).isActive = true
-        descriptionLabel.bottomAnchor.constraint(equalTo: marginGuide.bottomAnchor).isActive = true
+        descriptionLabel.bottomAnchor.constraint(equalTo: marginGuide.bottomAnchor, constant: 5).isActive = true
         descriptionLabel.trailingAnchor.constraint(equalTo: marginGuide.trailingAnchor).isActive = true
         descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 5).isActive = true
     }
@@ -113,6 +120,7 @@ extension CollectionViewCell {
         descriptionLabel.preferredMaxLayoutWidth = width
     }
     
+    //show/hide the activityindicator
     func showActivityIndicatorView(_ show: Bool) {
         progressIndicatorView.displayActivityIndicatorView(show: show)
     }

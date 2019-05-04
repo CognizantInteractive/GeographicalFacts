@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2616EFD0227DB8D300CD71E9 /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2616EFCF227DB8D300CD71E9 /* CollectionView.swift */; };
 		26522A0E227815EF005207AB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26522A0D227815EF005207AB /* AppDelegate.swift */; };
 		26522A10227815EF005207AB /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26522A0F227815EF005207AB /* MainViewController.swift */; };
 		26522A15227815F0005207AB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 26522A14227815F0005207AB /* Assets.xcassets */; };
@@ -20,7 +21,6 @@
 		26F8FF362278619300BBFB49 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F8FF352278619300BBFB49 /* Constants.swift */; };
 		26F8FF392278623000BBFB49 /* FactData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F8FF382278623000BBFB49 /* FactData.swift */; };
 		26F8FF3D227951FD00BBFB49 /* FactsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F8FF3C227951FD00BBFB49 /* FactsViewModelTests.swift */; };
-		26F8FF412279FCBA00BBFB49 /* ImageDownloadHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F8FF402279FCBA00BBFB49 /* ImageDownloadHandler.swift */; };
 		26F8FF432279FDBD00BBFB49 /* FactsFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F8FF422279FDBD00BBFB49 /* FactsFileManager.swift */; };
 		26F8FF47227AA3B900BBFB49 /* FactsFileManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F8FF46227AA3B900BBFB49 /* FactsFileManagerTests.swift */; };
 		26F8FF49227AA7CF00BBFB49 /* ProgressIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F8FF48227AA7CF00BBFB49 /* ProgressIndicatorView.swift */; };
@@ -43,6 +43,7 @@
 
 /* Begin PBXFileReference section */
 		00C4F6D0A4BE87B19C82A6B5 /* Pods-GeographicalFacts.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GeographicalFacts.release.xcconfig"; path = "Target Support Files/Pods-GeographicalFacts/Pods-GeographicalFacts.release.xcconfig"; sourceTree = "<group>"; };
+		2616EFCF227DB8D300CD71E9 /* CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionView.swift; sourceTree = "<group>"; };
 		26522A0A227815EF005207AB /* GeographicalFacts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GeographicalFacts.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		26522A0D227815EF005207AB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		26522A0F227815EF005207AB /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -60,7 +61,6 @@
 		26F8FF352278619300BBFB49 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		26F8FF382278623000BBFB49 /* FactData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactData.swift; sourceTree = "<group>"; };
 		26F8FF3C227951FD00BBFB49 /* FactsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactsViewModelTests.swift; sourceTree = "<group>"; };
-		26F8FF402279FCBA00BBFB49 /* ImageDownloadHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownloadHandler.swift; sourceTree = "<group>"; };
 		26F8FF422279FDBD00BBFB49 /* FactsFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactsFileManager.swift; sourceTree = "<group>"; };
 		26F8FF46227AA3B900BBFB49 /* FactsFileManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactsFileManagerTests.swift; sourceTree = "<group>"; };
 		26F8FF48227AA7CF00BBFB49 /* ProgressIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressIndicatorView.swift; sourceTree = "<group>"; };
@@ -148,6 +148,7 @@
 			children = (
 				26522A2F2278191F005207AB /* CollectionViewCell.swift */,
 				26522A0F227815EF005207AB /* MainViewController.swift */,
+				2616EFCF227DB8D300CD71E9 /* CollectionView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -174,7 +175,6 @@
 			isa = PBXGroup;
 			children = (
 				26F8FF352278619300BBFB49 /* Constants.swift */,
-				26F8FF402279FCBA00BBFB49 /* ImageDownloadHandler.swift */,
 				26F8FF422279FDBD00BBFB49 /* FactsFileManager.swift */,
 				26F8FF48227AA7CF00BBFB49 /* ProgressIndicatorView.swift */,
 				26F8FF4A227ABB0C00BBFB49 /* UIAlertController+Extension.swift */,
@@ -403,6 +403,7 @@
 			files = (
 				26522A2E22781836005207AB /* ViewModel.swift in Sources */,
 				26F8FF49227AA7CF00BBFB49 /* ProgressIndicatorView.swift in Sources */,
+				2616EFD0227DB8D300CD71E9 /* CollectionView.swift in Sources */,
 				26F8FF392278623000BBFB49 /* FactData.swift in Sources */,
 				26522A10227815EF005207AB /* MainViewController.swift in Sources */,
 				26F8FF432279FDBD00BBFB49 /* FactsFileManager.swift in Sources */,
@@ -410,7 +411,6 @@
 				26F8FF4B227ABB0C00BBFB49 /* UIAlertController+Extension.swift in Sources */,
 				26F8FF32227860CA00BBFB49 /* NetworkManager.swift in Sources */,
 				26F8FF362278619300BBFB49 /* Constants.swift in Sources */,
-				26F8FF412279FCBA00BBFB49 /* ImageDownloadHandler.swift in Sources */,
 				26522A302278191F005207AB /* CollectionViewCell.swift in Sources */,
 				26F8FF4F227ACA1300BBFB49 /* CellViewModel.swift in Sources */,
 				26522A0E227815EF005207AB /* AppDelegate.swift in Sources */,

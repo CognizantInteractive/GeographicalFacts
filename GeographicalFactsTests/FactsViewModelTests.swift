@@ -11,10 +11,8 @@ import XCTest
 
 class FactsViewModelTests: XCTestCase {
     var viewModel: ViewModel!
-    var factsFileManager: FactsFileManager!
     override func setUp() {
         viewModel = ViewModel()
-        factsFileManager = FactsFileManager()
     }
 
     override func tearDown() {
@@ -66,44 +64,5 @@ class FactsViewModelTests: XCTestCase {
         viewModel.factData = factDataModel
         viewModel.checkForValidFactData(data: viewModel.factData)
         XCTAssertEqual(viewModel.factData.rows?.count, 1)
-    }
-    
-    //This test case will be passed if the fact image is downloaded successfully
-    func testGetFactImageSuccessCall() {
-        //deleting the saved images folder before downloading the image
-        factsFileManager.deleteImagesFolder()
-        let successWaitExpectation = expectation(description: "FactsImageDownloadSuccess")
-        viewModel.getImageData(ImageUrls.imageDownloadSuccessUrl, {(result) in
-            switch result {
-            case .success:
-                successWaitExpectation.fulfill()
-            default:
-                break
-            }
-        })
-        self.waitForExpectations(timeout: 30) { (err) in
-            if let error = err {
-                print("Error: \(error.localizedDescription)")
-                XCTAssertTrue(false, "Facts image download timeout")
-            }
-        }
-    }
-    //This test case will be passed if the fact image is not downloaded as its wrong url
-    func testGetFactImageFailureCall() {
-        let failureWaitExpectation = expectation(description: "FactsImageDownloadFail")
-        viewModel.getImageData(ImageUrls.imageDownloadFailUrl, {(result) in
-            switch result {
-            case .failure:
-                failureWaitExpectation.fulfill()
-            default:
-                break
-            }
-        })
-        self.waitForExpectations(timeout: 30) { (err) in
-            if let error = err {
-                print("Error: \(error.localizedDescription)")
-                XCTAssertTrue(false, "Facts image download timeout")
-            }
-        }
     }
 }

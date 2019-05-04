@@ -9,8 +9,17 @@
 import Foundation
 import UIKit
 
-//Class which handles image data save in Cache folder
+//Class which downloads the image and save in Cache
 class FactsFileManager {
+    
+    static let fileManager: FactsFileManager = {
+        let shared =   FactsFileManager()
+        return shared
+    }()
+    
+    private init () {
+        
+    }
     let fileManger = FileManager.default
     // MARK: - Functions
     //This function returns the folder path in which images are saved
@@ -47,35 +56,62 @@ class FactsFileManager {
         return success
     }
     
-    //This function returns the particular fact image if present in Cache folder.
-    func loadFactImageFromCacheIfPresent(imageURL: String) -> UIImage? {
+    //This function returns the particular fact image if present in Cache folder,
+    //If not present, start the image download
+    func loadFactImageFromCache(imageUrlString: String) -> UIImage? {
         var loadedImage: UIImage?
-        guard let imageURL = URL(string: imageURL) else {
+        guard let imageURL = URL(string: imageUrlString) else {
             return nil
         }
         let imageName = imageURL.lastPathComponent
         let imagePath = getTheFactsImageFolderPath().appending(imageName)
         if fileManger.fileExists(atPath: imagePath) {
             loadedImage = UIImage(contentsOfFile: imagePath)
+            return loadedImage
         }
-        return loadedImage
+        
+        self.downloadImageForUrl(url: imageUrlString)
+        return nil
     }
     
-    //This function checks whether particular image is present in Cache or not.
-    func isImagePresentInCacheFolder(imageURL: String) -> Bool {
-        var isImageAlreadyPresent = false
-        guard let imageURL = URL(string: imageURL) else {
-            return false
-        }
-        let imageName = imageURL.lastPathComponent
-        let imagePath = getTheFactsImageFolderPath().appending(imageName)
-        if fileManger.fileExists(atPath: imagePath) {
-            isImageAlreadyPresent = true
-        }
-        return isImageAlreadyPresent
+    //This function initiates the image download and send the notfication on completion.
+    func downloadImageForUrl(url: String) {
+        self.getImageData(url, { (result) in
+            var userInfo: [String: Any] = [String: Any]()
+            userInfo[UserInfoKeys.urlKey] = url
+            userInfo[UserInfoKeys.resultKey] =  result
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(name: NotificationNames.finishedImageDownload,
+                                                object: nil,
+                                                userInfo: userInfo)
+            }
+        })
     }
     
-    //This function deletes the saved images in cache
+    //This function downloads each fact image to be displayed.
+    //Image gets saved in App's Cache folder once download is successfully completed,
+    //so that next time this image can be used for display without downloading it again.
+    func getImageData(_ imageURL: String,
+                      _ completion: @escaping (ImageDownloadResult) -> Void) {
+        guard Reachability.isConnectedToNetwork() else {
+            return completion(.failure(ErrorMessages.networkErrorMessgae))
+        }
+        NetworkManager.getImageData(imageURL, { [weak self] (result) in
+            switch result {
+            case .success(let imageData):
+                guard let newImageData = imageData as? UIImage else {
+                    return completion(.failure(ErrorMessages.commonErrorMessage))
+                }
+                //saving the image to cache
+                _ =  self?.saveImageToCacheDirectory(newImageData: newImageData, imageURL: imageURL)
+                completion(.success)
+            case .failure(let errorMsg):
+                completion(.failure(errorMsg))
+            }
+        })
+    }
+    
+    //This function deletes the saved images from cache
     func deleteImagesFolder() {
         let factsImagesFolderPath = getTheFactsImageFolderPath()
         do {

@@ -9,22 +9,23 @@
 import UIKit
 
 class MainViewController: UIViewController {
-    private var collectionView: UICollectionView!
     private var progressIndicatorView = ProgressIndicatorView()
     private var refreshControl: UIRefreshControl!
     private var viewModel = ViewModel()
     private lazy var flowLayout: UICollectionViewFlowLayout = {
         let flowLayout = UICollectionViewFlowLayout()
-        let width = UIScreen.main.bounds.size.width
-        //estimated size
         flowLayout.estimatedItemSize = CGSize(width: viewModel.getPreferredWith(forSize: self.view.bounds.size),
-                                              height: CGFloat(Float(30)))
+                                              height: CGFloat(Float(CellSize.estimatedHeight)))
         return flowLayout
+    }()
+    lazy var collectionView: UICollectionView = {
+        let collectionView = CollectionView(frame: .zero,
+                                            collectionViewLayout: flowLayout)
+        return collectionView
     }()
     init() {
         super.init(nibName: nil, bundle: nil)
         self.title = viewModel.getLoadingTitle()
-        viewModel.delegate = self
     }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -33,28 +34,21 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
         configureViews()
+        addNotificationObservers()
         getFactsData()
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        let width = self.view.frame.size.width
-        let frame =   CGRect(x: 0,
-                             y: 0,
-                             width: width,
-                             height: UIScreen.main.bounds.size.height)
-        self.collectionView.frame = frame
+        self.collectionView.frame = viewModel.getCollectionViewFrame(width: self.view.frame.size.width)
+    }
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 }
 
 extension MainViewController {
     // MARK: - Functions
     func configureViews() {
-        self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
-        self.collectionView.register(CollectionViewCell.self,
-                                     forCellWithReuseIdentifier: CellIdentifiers.CollectionViewCellId)
-        self.collectionView.showsVerticalScrollIndicator = false
-        self.collectionView.backgroundColor = UIColor.gray
-        collectionView.isHidden = true
         self.collectionView.dataSource = viewModel
         self.view.addSubview(self.collectionView)
         
@@ -105,11 +99,57 @@ extension MainViewController {
         let alertController = UIAlertController.showAlertView(title: ErrorMessages.errorAlertTitle, message: message)
         self.present(alertController, animated: true, completion: nil)
     }
-    
     func invalidateLayoutAndReloadTheCollectionView() {
         DispatchQueue.main.async {
-            self.collectionView?.collectionViewLayout.invalidateLayout()
-            self.collectionView?.reloadData()
+            self.collectionView.collectionViewLayout.invalidateLayout()
+            self.collectionView.reloadData()
+        }
+    }
+    func addNotificationObservers() {
+        self.regiesterForNotificationName(NotificationNames.finishedImageDownload)
+    }
+    func regiesterForNotificationName(_ notificationName: Notification.Name) {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(didRecieveNotification(_:)),
+                                               name: notificationName, object: nil )
+    }
+    @objc func didRecieveNotification(_ notification: Notification) {
+        if notification.name == NotificationNames.finishedImageDownload {
+            let userInfo    = notification.userInfo
+            let urlStr   = userInfo?[UserInfoKeys.urlKey] as? String
+            let result   = userInfo?[UserInfoKeys.resultKey] as? ImageDownloadResult
+            
+            if let unWrappedUrlString = urlStr, let  unWrappedResult =  result {
+                switch unWrappedResult {
+                case .success:
+                    self.didFinishImageDownload(urlString: unWrappedUrlString)
+                case .failure(let errorString):
+                    print(errorString)
+                    self.didFailImageDownload(urlString: unWrappedUrlString)
+                }
+            }
+        }
+    }
+    func didFailImageDownload(urlString: String) {
+        for cell in self.collectionView.visibleCells {
+            if  let customCell = cell as? CollectionViewCell,
+                let imageUrlString = customCell.cellViewModel?.factData.imageHref,
+                imageUrlString ==  urlString {
+                customCell.showActivityIndicatorView(false)
+                break
+            }
+        }
+    }
+    func didFinishImageDownload(urlString: String) {
+        for cell in self.collectionView.visibleCells {
+            if  let customCell = cell as? CollectionViewCell,
+                let imageUrlString = customCell.cellViewModel?.factData.imageHref,
+                urlString ==  imageUrlString {
+                if let indexPath = collectionView.indexPath(for: customCell) {
+                    collectionView.reloadItems(at: [indexPath])
+                }
+                break
+            }
         }
     }
 }
@@ -132,49 +172,19 @@ extension MainViewController {
         self.estimateVisibleCellSizes(to: size)
         coordinator.animate(alongsideTransition: { _ in
         }, completion: { _ in
-            self.collectionView?.collectionViewLayout.invalidateLayout()
+            self.collectionView.collectionViewLayout.invalidateLayout()
         })
     }
     //calcualting the estimated item size and to recalculate the visible cell sizes
     func estimateVisibleCellSizes(to size: CGSize) {
-        guard let collectionView = self.collectionView else {
-            return
-        }
-        if let flowLayout = self.collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
-            flowLayout.estimatedItemSize = CGSize(width: viewModel.getPreferredWith(forSize: size), height: 30)
+        if let flowLayout = self.collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            flowLayout.estimatedItemSize = CGSize(width: viewModel.getPreferredWith(forSize: size),
+                                                  height: CellSize.estimatedHeight)
         }
         collectionView.visibleCells.forEach({ cell in
             if let cell = cell as? CollectionViewCell {
                 cell.setPreferred(width: viewModel.getPreferredWith(forSize: size))
             }
         })
-    }
-}
-
-// MARK: - ImageDownloadHandler delegate methods
-extension MainViewController: ImageDownloadHandler {
-    //Function to inform that image download has started.
-    func imageDownloadStartedAtIndex(index: Int, cell: UICollectionViewCell) {
-        if let factCell = cell as? CollectionViewCell {
-            factCell.showActivityIndicatorView(true)
-        }
-    }
-    //Function to inform that image download is completed.
-    func imageDownloadCompletedAtIndex(index: Int, cell: UICollectionViewCell, result: ImageDownloadResult) {
-        guard let factCell = cell as? CollectionViewCell else {
-            return
-        }
-        factCell.showActivityIndicatorView(false)
-        switch result {
-        case .success:
-            factCell.cellViewModel?.imageDownloadState = .downloadSuccess
-            let visibleItems = self.collectionView.indexPathsForVisibleItems
-            for indexPath in visibleItems where indexPath.row == index {
-                collectionView.reloadItems(at: [IndexPath(row: index, section: 0)])
-            }
-        case .failure(let errorMessage):
-            factCell.cellViewModel?.imageDownloadState = .downloadFailed
-            print(errorMessage)
-        }
     }
 }
